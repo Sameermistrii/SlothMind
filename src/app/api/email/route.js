@@ -1,3 +1,5 @@
+import { addEmailToSheet } from '../../../lib/google-sheets.js';
+
 export async function POST(request) {
   try {
     const { email } = await request.json();
@@ -8,11 +10,22 @@ export async function POST(request) {
     
     console.log('Email received:', email);
     
-    return Response.json({ 
-      success: true, 
-      message: 'Email stored successfully',
-      email: email 
-    });
+    // Store email in Google Sheets
+    const success = await addEmailToSheet(email);
+    
+    if (success) {
+      return Response.json({ 
+        success: true, 
+        message: 'Email stored successfully in Google Sheets',
+        email: email 
+      });
+    } else {
+      return Response.json({ 
+        success: false, 
+        message: 'Failed to store email in Google Sheets',
+        email: email 
+      }, { status: 500 });
+    }
     
   } catch (error) {
     console.error('API Error:', error);
@@ -21,5 +34,5 @@ export async function POST(request) {
 }
 
 export async function GET() {
-  return Response.json({ message: 'Email API is working' });
+  return Response.json({ message: 'Email API is working - emails will be stored in Google Sheets' });
 }
