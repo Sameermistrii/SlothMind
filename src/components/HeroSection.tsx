@@ -17,7 +17,7 @@ export default function HeroSection({ className = "" }: HeroSectionProps) {
 
   const sectionRef = useRef<HTMLElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const animationFrameRef = useRef<number>();
+  const animationFrameRef = useRef<number | null>(null);
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
