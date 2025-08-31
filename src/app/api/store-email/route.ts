@@ -2,8 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
   try {
-    const { email } = await request.json();
+    // Parse the request body
+    const body = await request.json();
+    const { email } = body;
 
+    // Validate email
     if (!email || typeof email !== 'string' || !email.includes('@')) {
       return NextResponse.json(
         { error: 'Invalid email address' },
@@ -11,28 +14,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // For now, we'll just log the email and return success
-    // In a production environment, you'd want to store this in a database
+    // Log the email (this will appear in Vercel logs)
     console.log('Email received:', email);
     
-    // You can also send this to an external service like:
-    // - Airtable
-    // - Google Sheets
-    // - Database (MongoDB, PostgreSQL, etc.)
-    // - Email service (SendGrid, Mailchimp, etc.)
-
+    // Return success response
     return NextResponse.json(
       { 
+        success: true,
         message: 'Email stored successfully',
         email: email 
       },
       { status: 200 }
     );
+    
   } catch (error) {
-    console.error('Error storing email:', error);
+    console.error('API Error:', error);
     return NextResponse.json(
-      { error: 'Failed to store email' },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }
+}
+
+// Add GET method for testing
+export async function GET() {
+  return NextResponse.json(
+    { message: 'Email API is working' },
+    { status: 200 }
+  );
 }
