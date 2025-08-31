@@ -35,8 +35,8 @@ export default function FooterSection() {
     try {
       console.log('Submitting email:', email);
       
-      // Store email using Pages Router API
-      const response = await fetch('/api/store-email', {
+      // Store email using App Router API
+      const response = await fetch('/api/email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
