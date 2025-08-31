@@ -5,5 +5,8 @@
       "src": "package.json",
       "use": "@vercel/next"
     }
-  ]
+  ],
+  "env": {
+    "NPM_FLAGS": "--legacy-peer-deps"
+  }
 }
