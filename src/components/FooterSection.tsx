@@ -35,7 +35,7 @@ export default function FooterSection() {
     try {
       console.log('Submitting email:', email);
       
-      // Store email in Gmail.txt file
+      // Store email using Pages Router API
       const response = await fetch('/api/store-email', {
         method: 'POST',
         headers: {
