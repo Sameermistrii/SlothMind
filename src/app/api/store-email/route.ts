@@ -1,6 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, appendFile, access } from 'fs/promises';
-import { join } from 'path';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,23 +11,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Get the project root directory
-    const projectRoot = process.cwd();
-    const filePath = join(projectRoot, 'Gmail.txt');
-
-    try {
-      // Check if file exists
-      await access(filePath);
-      
-      // File exists, append the email
-      await appendFile(filePath, `\n${email}`);
-    } catch {
-      // File doesn't exist, create it with the first email
-      await writeFile(filePath, email);
-    }
+    // For now, we'll just log the email and return success
+    // In a production environment, you'd want to store this in a database
+    console.log('Email received:', email);
+    
+    // You can also send this to an external service like:
+    // - Airtable
+    // - Google Sheets
+    // - Database (MongoDB, PostgreSQL, etc.)
+    // - Email service (SendGrid, Mailchimp, etc.)
 
     return NextResponse.json(
-      { message: 'Email stored successfully' },
+      { 
+        message: 'Email stored successfully',
+        email: email 
+      },
       { status: 200 }
     );
   } catch (error) {

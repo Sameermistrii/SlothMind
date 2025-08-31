@@ -33,6 +33,8 @@ export default function FooterSection() {
     setIsSubmitting(true);
     
     try {
+      console.log('Submitting email:', email);
+      
       // Store email in Gmail.txt file
       const response = await fetch('/api/store-email', {
         method: 'POST',
@@ -41,6 +43,10 @@ export default function FooterSection() {
         },
         body: JSON.stringify({ email }),
       });
+
+      console.log('Response status:', response.status);
+      const responseData = await response.json();
+      console.log('Response data:', responseData);
 
       if (response.ok) {
         setIsActivated(true);
@@ -54,9 +60,10 @@ export default function FooterSection() {
           }
         });
       } else {
-        throw new Error('Failed to store email');
+        throw new Error(`Failed to store email: ${responseData.error || response.statusText}`);
       }
     } catch (error) {
+      console.error('Submission error:', error);
       toast.error("Failed to join waiting list. Please try again.", {
         style: {
           background: "rgba(15, 15, 15, 0.95)",
