@@ -258,29 +258,44 @@ export default function AboutSection() {
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5 rounded-3xl" />
               </div>
 
-              {/* Animated mesh canvas */}
-              {!prefersReducedMotion ? (
-                <canvas
-                  ref={canvasRef}
-                  className="absolute inset-6 rounded-2xl opacity-90"
-                  style={{ 
-                    filter: "blur(0.5px)",
-                    mixBlendMode: "screen"
-                  }}
-                />
-              ) : (
-                /* Static fallback */
-                <div 
-                  className="absolute inset-6 rounded-2xl opacity-60" 
-                  style={{
-                    background: `
-                      radial-gradient(circle at 30% 30%, rgba(37, 244, 223, 0.15) 0%, transparent 60%),
-                      radial-gradient(circle at 70% 70%, rgba(37, 244, 223, 0.1) 0%, transparent 60%),
-                      radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%)
-                    `
-                  }}
-                />
-              )}
+              {/* Looping Video */}
+              <video
+                className="absolute inset-6 rounded-2xl object-cover"
+                style={{ 
+                  width: 'calc(100% - 3rem)',
+                  height: 'calc(100% - 3rem)',
+                  filter: "brightness(0.8) contrast(1.1)",
+                  mixBlendMode: "screen"
+                }}
+                autoPlay
+                loop
+                muted
+                playsInline
+              >
+                <source src="/loop.mp4" type="video/mp4" />
+                {/* Fallback to animated mesh if video fails to load */}
+                {!prefersReducedMotion ? (
+                  <canvas
+                    ref={canvasRef}
+                    className="absolute inset-0 rounded-2xl opacity-90"
+                    style={{ 
+                      filter: "blur(0.5px)",
+                      mixBlendMode: "screen"
+                    }}
+                  />
+                ) : (
+                  <div 
+                    className="absolute inset-0 rounded-2xl opacity-60" 
+                    style={{
+                      background: `
+                        radial-gradient(circle at 30% 30%, rgba(37, 244, 223, 0.15) 0%, transparent 60%),
+                        radial-gradient(circle at 70% 70%, rgba(37, 244, 223, 0.1) 0%, transparent 60%),
+                        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 50%)
+                      `
+                    }}
+                  />
+                )}
+              </video>
 
               {/* Subtle edge glow */}
               <div className="absolute inset-0 rounded-3xl ring-1 ring-inset ring-primary/20" />
