@@ -276,7 +276,7 @@ export default function FooterSection() {
           >
             <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-muted-foreground/60">
               <p className="font-light">
-                © 2024 SlothMind. Cognitive augmentation redefined.
+                © 2025 SlothMind. Your AI Operator.
               </p>
               
               <div className="flex items-center gap-8">
